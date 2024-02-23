@@ -1,9 +1,9 @@
-import Processo from "../abstracoes/processo";
-import MenuTipoDocumento from "../menus/menuTipoDocumento";
-import Cliente from "../modelos/cliente";
-import CadastroRg from "./cadastroRg";
+import Processo from "../../abstracoes/processo";
+import MenuTipoDocumento from "../../menus/menuTipoDocumento";
+import Cliente from "../../modelos/cliente";
+import CadastroRg from "../cadastroTitular/cadastroRg";
 
-export default class CadastrarDocumentosCliente extends Processo {
+export default class CadastrarDocumentosDependente extends Processo{
     private cliente: Cliente
     constructor(cliente: Cliente) {
         super()

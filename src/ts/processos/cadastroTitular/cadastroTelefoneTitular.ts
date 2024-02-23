@@ -1,6 +1,6 @@
-import Processo from "../abstracoes/processo";
-import Cliente from "../modelos/cliente";
-import Telefone from "../modelos/telefone";
+import Processo from "../../abstracoes/processo";
+import Cliente from "../../modelos/cliente";
+import Telefone from "../../modelos/telefone";
 
 export default class CadastroTelefoneTitular extends Processo{
     private cliente: Cliente
