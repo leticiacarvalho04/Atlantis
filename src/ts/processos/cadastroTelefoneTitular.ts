@@ -11,9 +11,15 @@ export default class CadastroTelefoneTitular extends Processo{
     }
 
     processar(): void {
-        console.log('Coletando os dados de telefone...');
-        let ddd = this.entrada.receberTexto('Qual o seu ddd?')
-        let numero = this.entrada.receberTexto('Qual o seu número?')
-        let telefone = new Telefone(ddd,numero)
+        let quantidade = this.entrada.receberNumero('| Quantos telefones serão cadastrados?')
+        for(let index=0; index < quantidade; index++){
+            console.log('Coletando os dados de telefone...');
+            let ddd = this.entrada.receberTexto('| Qual o seu ddd?')
+            let numero = this.entrada.receberTexto('| Qual o seu número?')
+            let telefone = new Telefone(ddd,numero)
+            this.cliente.Telefones.push(telefone)
+
+            console.log(`----------------------`)
+        }
     }
 }

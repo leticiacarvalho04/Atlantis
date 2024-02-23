@@ -31,4 +31,5 @@ export default class Cliente {
     public get Titular() { return this.titular }
 
     public set Endereco(endereco: Endereco) { this.endereco = endereco }
+    public set Telefones(telefone: Telefone[]) { this.telefones = telefone }
 }
