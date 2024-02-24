@@ -1,31 +1,39 @@
 import Processo from "../../abstracoes/processo";
 import Armazem from "../../dominio/armazem";
-import ImpressaorCliente from "../../impressores/impressorCliente";
 import Impressor from "../../interfaces/impressor";
 import Cliente from "../../modelos/cliente";
 
-export default class ListagemDependentes extends Processo{
+export default class ListagemDependentes extends Processo {
     private clientes: Cliente[]
-    private impressor!: Impressor
+    private impressor !: Impressor;
     constructor() {
-        super()
+        super();
         this.clientes = Armazem.InstanciaUnica.Clientes
     }
+
     processar(): void {
-        console.clear()
-        console.log('Iniciando a listagem dos clientes titulares...')
-        this.clientes.forEach(cliente => {
-            if (this.titular(cliente)) {
-                this.impressor = new ImpressaorCliente(cliente)
-                console.log(this.impressor.imprimir())
+        console.clear();
+        const cpf = this.entrada.receberNumero("Digite o CPF do cliente que você deseja listar os dependentes:");
+        const cliente = this.buscarClientePorCPF(cpf);
+
+        if (cliente) {
+            console.log(`Dependentes do cliente ${cliente.Nome}:`);
+
+            if (cliente.Dependentes.length > 0) {
+                for (const dependente of cliente.Dependentes) {
+                    console.log(dependente);
+                }
+            } else {
+                console.log("Este cliente não possui dependentes.");
             }
-        })
-    }
-    private titular(cliente: Cliente): boolean {
-        let verificacao = false
-        if (cliente.Titular == undefined) {
-            verificacao = true
+
+            console.log("----------------------");
+        } else {
+            console.log("Cliente não encontrado.");
         }
-        return verificacao
+    }
+
+    private buscarClientePorCPF(cpf: number): Cliente | undefined {
+        return Armazem.InstanciaUnica.Clientes.find(cliente => cliente.Documentos.some(doc => doc.Numero === cpf.toString()));
     }
 }
