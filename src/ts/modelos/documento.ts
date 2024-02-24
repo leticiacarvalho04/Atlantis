@@ -20,5 +20,15 @@ export default class Documento {
     public get DataExpedicao(){
         return this.dataExpedicao
     }
+
+    setTipo(novoTipo: TipoDocumento): void {
+        // Adicione aqui qualquer lógica de validação ou transformação
+        this.tipo = novoTipo;
+    }
+
+    setNumero(novoNumero: string): void {
+        // Adicione aqui qualquer lógica de validação ou transformação
+        this.numero = novoNumero;
+    }
     
 }

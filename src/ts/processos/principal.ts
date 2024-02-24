@@ -1,6 +1,7 @@
 import Processo from "../abstracoes/processo"
 import MenuPrincipal from "../menus/menuPricipal"
-import CadastroClienteDependente from "./cadastroDependente/cadastroClienteDependente"
+import CadastroClienteDependente from "./Dependentes/cadastroClienteDependente"
+import EditarCliente from "./Titulares/editarCliente"
 import TipoCadastroCliente from "./tipoCadastroCliente"
 import TipoListagemClientes from "./tipoListagemClientes"
 
@@ -17,19 +18,20 @@ export default class Principal extends Processo {
             case 1:
                 this.processo = new TipoCadastroCliente()
                 this.processo.processar()
-                break
+                break;
+            case 2:
+                this.processo = new EditarCliente()
+                this.processo.processar()
+                break;
             case 3:
                 this.processo = new TipoListagemClientes()
                 this.processo.processar()
-                break
-            {/*case 5:
-                this.processo = new CadastroClienteDependente()
-        this.processo.processar()*/}
+                break;
             case 0:
                 this.execucao = false
                 console.log('Até logo!')
                 console.clear()
-                break
+                break;
             default:
                 console.log('Opção não entendida :(')
         }

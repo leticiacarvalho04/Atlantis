@@ -4,7 +4,7 @@ import { TipoDocumento } from "../../enumeracoes/TipoDocumento";
 import Cliente from "../../modelos/cliente";
 import Endereco from "../../modelos/endereco";
 import Telefone from "../../modelos/telefone";
-import CadastrarDocumentosCliente from "../cadastroTitular/cadastrarDocumentosCliente";
+import CadastrarDocumentosCliente from "../Titulares/cadastrarDocumentosCliente";
 
 export default class CadastroClienteDependente extends Processo {
     private buscarClientePorCPF(cpf: number): Cliente | undefined {
