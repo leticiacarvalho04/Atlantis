@@ -1,6 +1,7 @@
 import Processo from "../abstracoes/processo";
 import MenuTipoListagemClientes from "../menus/menuTipoListagemClientes";
 import ListagemDependentes from "./cadastroDependente/listagemDependentes";
+import ListagemTodosDependentes from "./cadastroDependente/listagemTodosDependentes";
 import ListagemTitulares from "./cadastroTitular/listagemTitulares";
 
 export default class TipoListagemClientes extends Processo {
@@ -20,7 +21,9 @@ export default class TipoListagemClientes extends Processo {
             case 2:
                 this.processo = new ListagemDependentes()
                 this.processo.processar()
-        
+            case 3:
+                this.processo = new ListagemTodosDependentes()
+                this.processo.processar()
             default:
                 console.log('Opção não entendida... :(')
         }
