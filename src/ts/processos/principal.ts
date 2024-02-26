@@ -1,8 +1,7 @@
 import Processo from "../abstracoes/processo"
 import MenuPrincipal from "../menus/menuPricipal"
-import CadastroClienteDependente from "./Dependentes/cadastroClienteDependente"
-import EditarCliente from "./Titulares/editarCliente"
 import TipoCadastroCliente from "./tipoCadastroCliente"
+import TipoEdicaoCliente from "./tipoEdicaoCliente"
 import TipoListagemClientes from "./tipoListagemClientes"
 
 export default class Principal extends Processo {
@@ -20,7 +19,7 @@ export default class Principal extends Processo {
                 this.processo.processar()
                 break;
             case 2:
-                this.processo = new EditarCliente()
+                this.processo = new TipoEdicaoCliente()
                 this.processo.processar()
                 break;
             case 3:

@@ -39,6 +39,7 @@ export default class CadastroClienteDependente extends Processo {
 
             let armazem = Armazem.InstanciaUnica;
             armazem.Clientes.push(cliente);
+            console.log(cliente);
 
             console.log('Finalizando o cadastro do cliente...');
         } else {

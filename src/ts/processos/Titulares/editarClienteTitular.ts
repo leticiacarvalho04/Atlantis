@@ -6,7 +6,7 @@ import Cliente from "../../modelos/cliente";
 import Endereco from "../../modelos/endereco";
 import Telefone from "../../modelos/telefone";
 
-export default class EditarCliente extends Processo{
+export default class EditarClienteTitular extends Processo{
     private clientes: Cliente[]
     constructor(){
         super()
