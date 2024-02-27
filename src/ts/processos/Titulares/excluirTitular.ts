@@ -16,9 +16,10 @@ export default class ExcluirClienteTitular extends Processo{
         for (let index = 0; index < this.clientes.length; index++) {
             console.log(`| ${index + 1}: ${this.clientes[index].Nome}`);
         }
+        
         let indiceCliente = this.entrada.receberNumero(`Digite o número do cliente que deseja excluir: `);
         indiceCliente--;
-        
+
         if (indiceCliente >= 0 && indiceCliente < this.clientes.length) {
             this.clientes.splice(indiceCliente, 1);
             console.log("Cliente excluído com sucesso!");
