@@ -20,7 +20,6 @@ export default class EditarClienteTitular extends Processo{
         
         let clienteEncontrado: Cliente | undefined;
 
-        // Procurar cliente pelo documento dentro do array de clientes
         for (const cliente of this.clientes) {
             for (const documentoCliente of cliente.Documentos) {
                 if (documentoCliente.Numero === documento.toString()) {
