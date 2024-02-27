@@ -1,45 +1,54 @@
 import Processo from "../../abstracoes/processo";
 import Armazem from "../../dominio/armazem";
-import { TipoDocumento } from "../../enumeracoes/TipoDocumento";
 import Cliente from "../../modelos/cliente";
 import Endereco from "../../modelos/endereco";
 import Telefone from "../../modelos/telefone";
 import CadastrarDocumentosCliente from "../Titulares/cadastrarDocumentosCliente";
 
 export default class CadastroClienteDependente extends Processo {
-    private buscarClientePorCPF(cpf: number): Cliente | undefined {
-        return Armazem.InstanciaUnica.Clientes.find(cliente => cliente.Documentos.some(doc => doc.Numero === cpf.toString() && doc.Tipo === TipoDocumento.CPF));
+    constructor() {
+        super();
     }
 
     processar(): void {
-        let cpf = this.entrada.receberNumero(`Digite o número de CPF do cliente que você deseja adicionar um dependente:`);
+        let documento = this.entrada.receberNumero(`Digite o número de documento do cliente que você deseja adicionar um dependente:`);
         
-        // Buscar cliente pelo CPF
-        let cliente = this.buscarClientePorCPF(cpf);
+        let clienteEncontrado: Cliente | undefined;
 
-        if (cliente) {
+        // Procurar cliente pelo documento dentro do array de clientes
+        for (const cliente of Armazem.InstanciaUnica.Clientes) {
+            for (const documentoCliente of cliente.Documentos) {
+                if (documentoCliente.Numero === documento.toString()) {
+                    clienteEncontrado = cliente;
+                    break;
+                }
+            }
+            if (clienteEncontrado) break;
+        }
+
+        if (clienteEncontrado) {
             console.log('Cliente encontrado.');
 
             console.log('Iniciando o cadastro de um novo cliente...')
-            let nomeDependente = this.entrada.receberTexto('Qual o nome do dependente?')
-            let nomeSocialDependente = this.entrada.receberTexto('Qual o nome social do dependente?')
-            let dataNascimentoDependente = this.entrada.receberData('Qual a data de nascimento do dependente?')
+            let nomeDependente = this.entrada.receberTexto('| Qual o nome do dependente?')
+            let nomeSocialDependente = this.entrada.receberTexto('| Qual o nome social do dependente?')
+            let dataNascimentoDependente = this.entrada.receberData('| Qual a data de nascimento do dependente?')
             let dependente = new Cliente(nomeDependente, nomeSocialDependente, dataNascimentoDependente)
 
             // Clonar o endereço do cliente e atribuir ao dependente
-            dependente.Endereco = cliente.Endereco.clonar() as Endereco;
+            dependente.Endereco = clienteEncontrado.Endereco.clonar() as Endereco;
 
             // Clonar os telefones do cliente e atribuir ao dependente
-            dependente.Telefones = cliente.Telefones.map(telefone => ({ ...telefone })) as Telefone[];
+            dependente.Telefones = clienteEncontrado.Telefones.map(telefone => ({ ...telefone })) as Telefone[];
 
             this.processo = new CadastrarDocumentosCliente(dependente);
             this.processo.processar();
 
-            cliente.adicionarDependente(dependente);
+            clienteEncontrado.Dependentes.push(dependente);
 
             let armazem = Armazem.InstanciaUnica;
-            armazem.Clientes.push(cliente);
-            console.log(cliente);
+            armazem.Clientes.push(clienteEncontrado);
+            console.log(clienteEncontrado);
 
             console.log('Finalizando o cadastro do cliente...');
         } else {

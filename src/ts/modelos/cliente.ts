@@ -35,8 +35,4 @@ export default class Cliente {
     public set Endereco(endereco: Endereco) { this.endereco = endereco }
     public set Telefones(telefone: Telefone[]) { this.telefones = telefone }
     public set Documentos(documento: Documento[]) { this.Documentos = documento }
-
-    public adicionarDependente(dependente: Cliente) {
-        this.dependentes.push(dependente);
-    }
 }

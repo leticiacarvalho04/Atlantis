@@ -1,28 +1,30 @@
 import Processo from "../../abstracoes/processo";
 import Armazem from "../../dominio/armazem";
-import Impressor from "../../interfaces/impressor";
+import ImpressorCliente from "../../impressores/impressorCliente";
 import Cliente from "../../modelos/cliente";
 
 export default class ListagemDependentes extends Processo {
-    private clientes: Cliente[]
-    private impressor !: Impressor;
+    private clientes: Cliente[];
+    private impressor!: ImpressorCliente;
+
     constructor() {
         super();
-        this.clientes = Armazem.InstanciaUnica.Clientes
+        this.clientes = Armazem.InstanciaUnica.Clientes;
     }
 
     processar(): void {
         console.clear();
-        const cpf = this.entrada.receberNumero("Digite o CPF do cliente que você deseja listar os dependentes:");
-        const cliente = this.buscarClientePorCPF(cpf);
+        const documento = this.entrada.receberNumero("Digite o Documento do cliente que você deseja listar os dependentes:");
+
+        // Encontrar o cliente pelo documento
+        const cliente = this.clientes.find(cliente => cliente.Documentos.some(doc => doc.Numero === documento.toString()));
 
         if (cliente) {
             console.log(`Dependentes do cliente ${cliente.Nome}:`);
 
             if (cliente.Dependentes.length > 0) {
-                for (const dependente of cliente.Dependentes) {
-                    console.log(dependente);
-                }
+                this.impressor = new ImpressorCliente(cliente);
+                console.log(this.impressor.imprimir());
             } else {
                 console.log("Este cliente não possui dependentes.");
             }
@@ -31,9 +33,5 @@ export default class ListagemDependentes extends Processo {
         } else {
             console.log("Cliente não encontrado.");
         }
-    }
-
-    private buscarClientePorCPF(cpf: number): Cliente | undefined {
-        return Armazem.InstanciaUnica.Clientes.find(cliente => cliente.Documentos.some(doc => doc.Numero === cpf.toString()));
     }
 }
