@@ -1,5 +1,6 @@
 import Processo from "../abstracoes/processo"
 import MenuPrincipal from "../menus/menuPricipal"
+import CadastroAcomodacoes from "./Acomodacao/cadastroAcomodacoes"
 import ListagemAcomodacoes from "./Acomodacao/listagemAcomodacao"
 import TipoCadastroCliente from "./tipoCadastroCliente"
 import TipoClienteExcluido from "./tipoClienteExcluido"
@@ -15,6 +16,11 @@ export default class Principal extends Processo {
     processar(): void {
         this.menu.mostrar()
         this.opcao = this.entrada.receberNumero('Qual opção desejada?')
+
+        // Cadastro das acomodações estáticas
+        this.processo = new CadastroAcomodacoes()
+        this.processo.processar()
+
         switch (this.opcao) {
             case 1:
                 this.processo = new TipoCadastroCliente()
